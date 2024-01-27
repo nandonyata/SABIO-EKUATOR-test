@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package customer;
+
+option go_package = "/proto";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+message Customer {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message CustomerId {
+    int32 id = 1;
+}
+
+message ResponseStringCustomer {
+    string message = 1;
+}
+
+service CustomerService {
+    rpc Create(Customer) returns (ResponseStringCustomer);
+    rpc GetOne(CustomerId) returns (Customer);
+    rpc Update(Customer) returns (ResponseStringCustomer);
+    rpc Delete(CustomerId) returns (ResponseStringCustomer);
+    rpc GetAll(google.protobuf.Empty) returns (stream Customer);
+}
